@@ -1,0 +1,4 @@
+COLO829	Normal	/home/wzhang42/HiFi_Somatic_WDL_Package/HiFiBams/COLO829BL_s1.hifi_reads.bam
+COLO829	Normal	/home/wzhang42/HiFi_Somatic_WDL_Package/HiFiBams/COLO829BL_s2.hifi_reads.bam
+COLO829	Tumor	/home/wzhang42/HiFi_Somatic_WDL_Package/HiFiBams/COLO829_s3.hifi_reads.bam
+COLO829	Tumor	/home/wzhang42/HiFi_Somatic_WDL_Package/HiFiBams/COLO829_s4.hifi_reads.bam
