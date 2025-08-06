@@ -1,5 +1,5 @@
-#PacSomatic#: A Nextflow Pipeline for Somatic analysis using Pacbio HiFi Read-
-**PacSomatic** is nextflow pipeline, which was migrated from the Pacbio' **HiFi-Somatic-WDL**(https://github.com/PacificBiosciences/HiFi-somatic-WDL). DSL2 framework was adopted for the pipeline main and each function modules' script, which make it to be more flexible and customizable. To run PacSomatic Nextflow, user need to do  
+**PacSomatic**: A Nextflow Pipeline using **Pacbio** HiFi Read for **Somatic** analysis
+**PacSomatic** is nextflow pipeline. DSL2 framework was adopted for the pipeline main and each function modules' script, which make it to be more flexible and customizable. To run PacSomatic Nextflow, user need to do  
 1) Clone the pipeline' main script- **Pac_Somatic_analysis.nf**, configuration file -**nextflow.config**, and the function modules' script package- **module** folder.
 2) Get singularity containers (annotsv_3.3.6.sif,chord.sif,deepsomatic_1.6.1.sif, mosdepth_0.3.4.sif, purple.sif, severus.sif, bcftools_1.17.sif, clair3.sif, ensembl-vep.sif, pb-cpg-tools.sif, samtools_1.17.sif, somatic_r_tools.sif, bedtools_2.31.0.sif, cnvkit_0.9.10.sif , hiphase.sif, pbmm2_1.12.0.sif, seqkit_2.5.1.sif, svpack.sif) from docker image hubs. **HiFi-Somatic-WDL** (Section-Tool versions) provide a table for tools used. 
 3) Created a HiFi_Somatic_Config folder and  download HiFi-Somatic related resources and references (https://github.com/PacificBiosciences/HiFi-somatic-WDL/blob/main/docs/step-by-step.md#download-the-resources-and-references) here.
