@@ -8,7 +8,7 @@
  Output: 
  Written by: Wenchao Zhang
  The Center for Applied Bioinformatics,St. Jude Children Research Hosptial
- Date: 11/26/2024
+ Start Date: 11/26/2024, Final Modify Date: 07/29/2025
 *********************************************************************************/
 nextflow.enable.dsl=2   
 include {Group_UnAligned_BAMs} from './modules/alignment.nf'
@@ -37,6 +37,9 @@ include {SVPack} from './modules/annot_sv.nf'
 // include {recover_mate_bnd} from './modules/annot_sv.nf'
 include {AnnotSV} from './modules/annot_sv.nf'
 include {CNVKit_Somatic} from './modules/somatic_cnv_caller.nf'
+include {CNVKit_Merge_Germline_VCFs} from './modules/somatic_cnv_caller.nf'
+include {CNVKit_Extract_ploidy_purity} from './modules/somatic_cnv_caller.nf'
+include {CNVKit_Recall} from './modules/somatic_cnv_caller.nf'
 
 REFERENCE=""
 def parse_config_parameters() {
@@ -175,7 +178,7 @@ workflow {
   COLBALT_To_PURPLE= (params.Select_COBALT=="Y")? COBALT_Ch.To_Purple : Channel.empty() 
   
   PURPLE_InCh = (params.Select_PURPLE=="Y")? AMBER_To_PURPLE.combine(COLBALT_To_PURPLE, by:0) : Channel.empty()
-  PURPLE(PURPLE_InCh, REFERENCE)
+  PURPLE_Ch = PURPLE(PURPLE_InCh, REFERENCE)
 
   Pair_Normal_Tumor_Vcf_Ch =Pair_Normal_Tumor_Vcfs(Clair3_SNV_Ch.To_Pair_Normal_Tumor.groupTuple())
   
@@ -216,4 +219,12 @@ workflow {
   
   CNVKit_Somatic_InCh = (params.Select_CNVKit_Somatic == "Y" )? Pair_Normal_Tumor_Bam_Ch.To_CNVKit_Somatic : Channel.empty()
   CNVKit_Somatic_Ch = CNVKit_Somatic(CNVKit_Somatic_InCh, REFERENCE)
+ 
+  CNVKit_Merge_Germline_VCFs_InCh = (params.Select_CNVKit_Somatic == "Y" )? Pair_Normal_Tumor_Vcf_Ch.To_CNVKit_Merge_Germline_VCFs : Channel.empty()
+  CNVKit_Merge_Germline_VCFs_Ch = CNVKit_Merge_Germline_VCFs(CNVKit_Merge_Germline_VCFs_InCh)
+
+  CNVKit_Extract_ploidy_purity_Ch = CNVKit_Extract_ploidy_purity(PURPLE_Ch.To_CNVKit_Extract_ploidy_purity)
+
+  CNVKit_Recall_InCh = (params.Select_CNVKit_Somatic == "Y" )? (CNVKit_Somatic_Ch.To_CNVKit_Recall.combine(CNVKit_Merge_Germline_VCFs_Ch.To_CNVKit_Recall, by:0)).combine(CNVKit_Extract_ploidy_purity_Ch.To_CNVKit_Recall,by:0) : Channel.empty() 
+  CNVKit_Recall_Ch = CNVKit_Recall(CNVKit_Recall_InCh)   
 }
