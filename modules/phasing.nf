@@ -83,6 +83,9 @@ publishDir "${params.outdir}/${params.project}/HiFiPhase/${SampleName}", mode: '
 
   script:
   """
+    #!/bin/bash
+    echo "Running custom script without -euo pipefail"    
+
     hiphase \
       --bam ${normal_aligned_bam} \
       -t ${task.cpus} \

@@ -138,6 +138,12 @@ process PURPLE {
             path(PLOTS),
             path(CIRCOS)          
        )
+
+       tuple(
+            val(SampleName),
+            path("${SampleName}.Tumor.purple.purity.tsv"),
+            emit: To_CNVKit_Extract_ploidy_purity // To_CNVKit_Recall
+       )
     
     // -ensembl_data_dir ensembl_data_dir/common/ensembl_data
     // export TMPDIR=${params.TMP_DIR}

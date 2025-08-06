@@ -149,6 +149,15 @@ process Pair_Normal_Tumor_Vcfs {
            val(SampleName),
            path("${SampleName}_normal.vcf.gz"),
            path("${SampleName}_normal.vcf.gz.tbi"),
+      	   path("${SampleName}_tumor.vcf.gz"),
+           path("${SampleName}_tumor.vcf.gz.tbi"),
+           emit: To_CNVKit_Merge_Germline_VCFs
+       )
+
+       tuple(
+           val(SampleName),
+           path("${SampleName}_normal.vcf.gz"),
+           path("${SampleName}_normal.vcf.gz.tbi"),
            emit: To_HiPhasing_Normal_Vcf
        )
        
